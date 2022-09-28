@@ -1,0 +1,11 @@
+.row {
+    padding-top : 250px
+  }
+
+  label, a, p, h1 {
+      color: black;
+  }
+
+  a:hover {
+      color: orangered;
+  }

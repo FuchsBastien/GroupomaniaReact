@@ -1,0 +1,61 @@
+.container {
+    border : solid 2px #f3e9f1;
+    margin-bottom: 50px;
+    border-radius: 20px;
+    width: 55%;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+ }
+
+ @media screen and (max-width: 640px) {
+    .CreateArticle {
+       width: 90%;
+    }
+ }
+
+ .picture {
+    width: 400px;
+    height : 200px;
+    object-fit: contain;
+    margin: 20px 0px 20px 0px;
+ }
+
+ @media screen and (max-width: 640px) {
+    .picture {
+       width: 250px;
+    }
+ }
+ 
+ .textare {
+    width: 65%;
+    margin-left : auto;
+    margin-right : auto; 
+    background-color: #dfe3ee;
+    border-radius: 15px;
+ }
+
+ @media screen and (max-width: 640px) {
+    .form-control {
+       width: 90%; 
+    }
+ }
+ 
+ label {
+    color: orangered;
+    font-size: 40px;  
+    margin-top: 20px;
+ }
+
+ @media screen and (max-width: 640px) {
+    label {
+       font-size: 25px; 
+    }
+ }
+ 
+ h1 {
+    text-align: center;
+    margin: 20px 0px 20px 0px;
+    color: orangered;
+    padding: 20px;
+ }

@@ -1,0 +1,44 @@
+.container {
+    padding-top : 250px; 
+}
+
+    @media screen and (max-width: 640px) {
+.container {
+    padding-top : 100px;
+    padding-bottom : 100px;
+}
+}
+
+input.form-control {
+    width : 50%;
+    margin-left : auto;
+    margin-right : auto;
+}
+
+@media screen and (max-width: 640px) {
+    input.form-control {
+        width: 100%;
+    }
+}
+
+input.form-control:valid {
+    border:3px solid #0a0 !important;
+}
+
+input.form-control:invalid {
+    border:1px solid grey !important;
+} 
+
+.responseError {
+    color: red;
+}
+
+.labelLogin, a, p, h1 {
+    color: black;
+}
+
+
+
+a:hover {
+    color: orangered;
+}

@@ -1,0 +1,56 @@
+.container {
+    padding-top : 250px; 
+    padding-bottom : 100px;
+}
+
+@media screen and (max-width: 640px) {
+    .container {
+        padding-top : 100px; ;
+    }
+}
+
+.picture {
+    width: 400px;
+    height : 200px;
+    object-fit: contain;
+    margin: 20px 0px 20px 0px;
+}
+
+@media screen and (max-width: 640px) {
+    .picture {
+        width: 320px;
+        height : 150px;
+    }
+}
+
+input.form-control {
+    width : 50%;
+    margin-left : auto;
+    margin-right : auto;
+}
+
+@media screen and (max-width: 640px) {
+    input.form-control {
+        width: 100%;
+    }
+}
+
+input.form-control:valid {
+    border:3px solid #0a0 !important;
+}
+
+input.form-control:invalid {
+    border:1px solid grey !important;
+} 
+
+label, a, p, h1 {
+    color: black;
+}
+
+a:hover {
+    color: orangered;
+}
+
+.router-link {
+    color: black;
+}
