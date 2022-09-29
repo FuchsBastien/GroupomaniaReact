@@ -1,5 +1,5 @@
 import style from './CreateArticle.module.css';
-import globalStyle from '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import cx from 'classnames';
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
@@ -19,11 +19,11 @@ function CreateArticle() {
     }
 
     return (
-        <div className = {[{style.container}, 'container']}>
+        <div className= {style.container}>
         <form> 
             <div className="form-group mt-3">
-                <label  htmlFor="content">Créer une publication</label>
-                <textarea className="form-control mt-4" onInput={e => articleInputData(e.target.value)} id="content" rows="3" placeholder="Quoi de neuf?" required></textarea>
+                <label className={style.label} htmlFor="content">Créer une publication</label>
+                <textarea className={cx ("form-control mt-4", style.textarea)} onInput={e => articleInputData(e.target.value)} id="content" rows="3" placeholder="Quoi de neuf?" required></textarea>
             </div>
 
             <div className="form-group mt-3">

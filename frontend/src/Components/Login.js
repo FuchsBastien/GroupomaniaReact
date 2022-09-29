@@ -1,8 +1,11 @@
-import style from './Login.css';
+import style from './Login.module.css';
+import cx from 'classnames';
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+
+
 
 
 function Login() {
@@ -106,19 +109,19 @@ function Login() {
 
 
     return (
-        <div className= "container">
+        <div className= {cx ("container", style.container)}>
             <form className="form-inline justify-content-center">
-                <h1 className="mt-5">Connexion</h1>
+                <h1 className={cx ("mt-5", style.h1)}>Connexion</h1>
 
                 <div className="form-group">
-                    <label className={style.labelLogin} htmlFor="Votre adresse email">Adresse mail</label>
-                    <input className="form-control" value={emailInputData} onInput={changeEmailInput} type="email" id="Votre adresse email" required/>
+                    <label className= {cx ("mb-1 mt-2", style.label)} htmlFor="Votre adresse email">Adresse mail</label>
+                    <input className= {cx ("form-control", style.input)} value={emailInputData} onInput={changeEmailInput} type="email" id="Votre adresse email" required/>
                     {errorEmailMessage}
                 </div>
 
                 <div className="form-group ">
-                    <label className="mb-1 mt-2" htmlFor="Votre mot de passe">Mot de passe</label>
-                    <input className="form-control" value={passwordInputData} onInput={e => changePasswordInput(e.target.value)} type="password" id="Votre mot de passe" autoComplete="on" required/>
+                    <label className= {cx ("mb-1 mt-2", style.label)} htmlFor="Votre mot de passe">Mot de passe</label>
+                    <input className= {cx ("form-control", style.input)} value={passwordInputData} onInput={e => changePasswordInput(e.target.value)} type="password" id="Votre mot de passe" autoComplete="on" required/>
                     {errorPasswordMessage}
                 </div>
 

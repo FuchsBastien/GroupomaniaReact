@@ -1,4 +1,5 @@
 import style from './Signup.module.css';
+import cx from 'classnames';
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
@@ -115,7 +116,7 @@ function Signup() {
 
     let picturePreview;
     if (file) {
-        picturePreview = <img className = "picture" src={URL.createObjectURL(file)}/>
+        picturePreview = <img className = {style.picture} src={URL.createObjectURL(file)}/>
     
     }
 
@@ -192,36 +193,36 @@ function Signup() {
 
 
     return (
-        <div className= {style.container}>
+        <div className= {cx ("container", style.container)}>
             <form className="form-inline justify-content-center">
-                <h1 className="mt-5">Inscription</h1>
+                <h1 className={cx ("mt-5", style.h1)}>Inscription</h1>
 
                 <div className="form-group">
-                    <label  htmlFor="Votre prénom">Prénom</label>
-                    <input className="form-control" value={firstnameInputData} onInput={e => setFirstnameInputData(e.target.value)} onKeyUp={firstnameValidation} type="text" id="Votre prénom" placeholder="Marc" required/>
+                    <label className= {cx ("mb-1 mt-2", style.label)} htmlFor="Votre prénom">Prénom</label>
+                    <input className= {cx ("form-control", style.input)}value={firstnameInputData} onInput={e => setFirstnameInputData(e.target.value)} onKeyUp={firstnameValidation} type="text" id="Votre prénom" placeholder="Marc" required/>
                     {errorFirstnameMessageRegex}
                 </div>
 
                 <div className="form-group">
-                    <label className="mb-1 mt-2" htmlFor="Votre nom">Nom</label>
-                    <input className="form-control" value={lastnameInputData} onInput={e => setLastnameInputData(e.target.value)} onKeyUp={lastnameValidation} type="text" id="Votre nom" placeholder="Dupont" required/>
+                    <label className= {cx ("mb-1 mt-2", style.label)}  htmlFor="Votre nom">Nom</label>
+                    <input className= {cx ("form-control", style.input)} value={lastnameInputData} onInput={e => setLastnameInputData(e.target.value)} onKeyUp={lastnameValidation} type="text" id="Votre nom" placeholder="Dupont" required/>
                     {errorLastnameMessageRegex}
                 </div>
 
                 <div className="form-group">
-                    <label className="mb-1 mt-2" htmlFor="Votre adresse email">Adresse mail</label>
-                    <input className="form-control" value={emailInputData} onInput={e => setEmailInputData(e.target.value)} onKeyUp={emailValidation} type="email" id="Votre adresse email" placeholder="dupontmarc@gmail.com" required/>
+                    <label className= {cx ("mb-1 mt-2", style.label)}  htmlFor="Votre adresse email">Adresse mail</label>
+                    <input className= {cx ("form-control", style.input)} value={emailInputData} onInput={e => setEmailInputData(e.target.value)} onKeyUp={emailValidation} type="email" id="Votre adresse email" placeholder="dupontmarc@gmail.com" required/>
                     {errorEmailMessageRegex}
                 </div>
 
                 <div className="form-group ">
-                    <label className="mb-1 mt-2" htmlFor="Votre mot de passe">Mot de passe</label>
-                    <input className="form-control" value={passwordInputData} onInput={e => setPasswordInputData(e.target.value)} onKeyUp={passwordValidation} type="password" id="Votre mot de passe" placeholder="Au moins 6 caractères dont un chiffre" autoComplete="on" required/>
+                    <label className= {cx ("mb-1 mt-2", style.label)}  htmlFor="Votre mot de passe">Mot de passe</label>
+                    <input className= {cx ("form-control", style.input)} value={passwordInputData} onInput={e => setPasswordInputData(e.target.value)} onKeyUp={passwordValidation} type="password" id="Votre mot de passe" placeholder="Au moins 6 caractères dont un chiffre" autoComplete="on" required/>
                     {errorPasswordMessageRegex}
                 </div>
 
                 <div className="form-group "> 
-                    <label className="mb-1 mt-2" htmlFor="Votre avatar">Avatar</label>
+                    <label className= {cx ("mb-1 mt-2", style.label)}  htmlFor="Votre avatar">Avatar</label>
                     <br/>
                     <input className="form-control-file" onChange={e => setFile(e.target.files[0])} aria-label="envoi image" accept="image/*" type="file" id="Votre avatar"/>
                    
@@ -236,7 +237,7 @@ function Signup() {
                 <button disabled={buttonInscriptionNoValid} className="submit btn btn-info btn-lg btn-block mt-3" onClick={sendForm} type="submit">S'inscrire</button>
             </form>
 
-            <p className="text-right mt-3">Déjà inscrit ? <a className="createAccount"><Link to="/">Se connecter</Link></a></p>
+            <p className="text-right mt-3">Déjà inscrit ? <a className={style.a}><Link to="/">Se connecter</Link></a></p>
            
         </div>
     );

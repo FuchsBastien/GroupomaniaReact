@@ -23,27 +23,27 @@
     }
 }
 
-input.form-control {
+.input {
     width : 50%;
     margin-left : auto;
     margin-right : auto;
 }
 
 @media screen and (max-width: 640px) {
-    input.form-control {
+    .input {
         width: 100%;
     }
 }
 
-input.form-control:valid {
+.input:valid {
     border:3px solid #0a0 !important;
-}
+} 
 
-input.form-control:invalid {
+.input:invalid {
     border:1px solid grey !important;
 } 
 
-label, a, p, h1 {
+.label, a, p, .h1 {
     color: black;
 }
 
