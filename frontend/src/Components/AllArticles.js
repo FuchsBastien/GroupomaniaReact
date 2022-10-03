@@ -19,6 +19,9 @@ function AllArticles() {
     const [userActivate, setUserActivate] = useState(localStorage.getItem('Activate'));
 
 
+
+
+
     React.useEffect(() => {
         loadArticles () 
     }, []);
@@ -38,7 +41,6 @@ function AllArticles() {
     
 
     return (
-    
         <div className ="all_articles">
 
             <CreateArticle func = {loadArticles}/>
@@ -50,21 +52,29 @@ function AllArticles() {
                     <div className="article">
                         <div className ="article_avatar">
                             <div className ="article_avatar1">
-                        
                                 {userAdmin === "true"? 
-                                <img className="iconUser rounded-circle mb-2 me-2" width="100" src={article.User.imageUrl}/>
-                                : null
+                                    <img className="iconUser rounded-circle mb-2 me-2" width="100" src={article.User.imageUrl}/>
+                                    : null
                                 }
                                 <p className= "name">{article.User.firstname} {article.User.lastname}</p>
+                                <p className= "name">{article.userId} {userId}</p>
                             </div>
                             <div className ="article_avatar2">
-                                <button className="modifyOrDelete" title="Modifier ou supprimer votre article" >
-                                    <i className="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
+                                {article.userId == userId? 
+                                    <button className="modifyOrDelete" title="Modifier ou supprimer votre article" >
+                                        <i className="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    : userAdmin == 'true'? 
+                                        <button className="modifyOrDelete" title="Modifier ou supprimer votre article" >
+                                        <i className="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                    : null
+                                }
                             </div>        
                         </div>
 
-                        <div>
+                       
+                        <div >
                             <button className="btn-success rounded">Modifier</button>
                             <br/><br/>
                             <br/>
