@@ -18,6 +18,9 @@ function AllArticles() {
     const [userLastname, setUserLastname] = useState(localStorage.getItem('Lastname'));
     const [userActivate, setUserActivate] = useState(localStorage.getItem('Activate'));
 
+    const [idArticleUpdate, setIdArticleUpdate] = useState('');
+   
+
 
 
 
@@ -47,6 +50,8 @@ function AllArticles() {
 
             <h1>Tous les Articles Publiés</h1> 
 
+            <h1>{idArticleUpdate}</h1>
+
             <div className="articles_frame">
                 {articlesArray.map (article => (
                     <div className="article">
@@ -57,15 +62,15 @@ function AllArticles() {
                                     : null
                                 }
                                 <p className= "name">{article.User.firstname} {article.User.lastname}</p>
-                                <p className= "name">{article.userId} {userId}</p>
+                            
                             </div>
                             <div className ="article_avatar2">
                                 {article.userId == userId? 
-                                    <button className="modifyOrDelete" title="Modifier ou supprimer votre article" >
+                                    <button className="modifyOrDelete" onClick={e => setIdArticleUpdate(article.id)} title="Modifier ou supprimer votre article" >
                                         <i className="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     : userAdmin == 'true'? 
-                                        <button className="modifyOrDelete" title="Modifier ou supprimer votre article" >
+                                        <button className="modifyOrDelete" onClick={e => setIdArticleUpdate(article.id)} title="Modifier ou supprimer votre article" >
                                         <i className="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
                                     : null
@@ -74,11 +79,14 @@ function AllArticles() {
                         </div>
 
                        
-                        <div >
-                            <button className="btn-success rounded">Modifier</button>
-                            <br/><br/>
-                            <br/>
-                        </div>
+                        {idArticleUpdate == article.id? 
+                            <div className ="article_avatar2">
+                                <button className="btn-success rounded">Modifier</button>
+                                <br/><br/>
+                                <br/>
+                            </div>
+                            : null
+                        }
 
                         
                         <p className="article_content">{article.content}</p>
