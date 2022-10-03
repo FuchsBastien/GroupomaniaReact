@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
-function Signup() {
+function Signup(props) {
 
     const [firstnameInputData, setFirstnameInputData] = useState('');
     const [lastnameInputData, setLastnameInputData] = useState('');
@@ -224,7 +224,9 @@ function Signup() {
                 <div className="form-group "> 
                     <label className= {cx ("mb-1 mt-2", style.label)}  htmlFor="Votre avatar">Avatar</label>
                     <br/>
-                    <input className="form-control-file" onChange={e => setFile(e.target.files[0])} aria-label="envoi image" accept="image/*" type="file" id="Votre avatar"/>
+
+                    {/* onChange={e => setFile(e.target.files[0])}*/}
+                    <input className="form-control-file" onChange={e => handleChange(e)}  aria-label="envoi image" accept="image/*" type="file" id="Votre avatar"/>
                    
 
                     <div className="preview_picture">

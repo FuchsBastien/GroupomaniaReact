@@ -20,13 +20,17 @@ function AllArticles() {
 
 
     React.useEffect(() => {
-        axios.get ("http://localhost:3000/api/articles/", {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-            .then(articles => {
-               console.log(articles);
-               setArticlesArray(articles.data)   
-            }) 
-            //on rajoute [] pour définir un tableau sans le mettre dans useState pour éviter de générer le state à l'infini
-        }, []);
+        loadArticles () 
+    }, []);
+
+        function loadArticles () {
+            axios.get ("http://localhost:3000/api/articles/", {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+                .then(articles => {
+                console.log(articles);
+                setArticlesArray(articles.data)   
+                }) 
+                //on rajoute [] pour définir un tableau sans le mettre dans useState pour éviter de générer le state à l'infini
+        }
 
 
     console.log(articlesArray);
@@ -35,11 +39,9 @@ function AllArticles() {
 
     return (
     
-
         <div className ="all_articles">
 
-            
-            <CreateArticle/>
+            <CreateArticle func = {loadArticles}/>
 
             <h1>Tous les Articles Publiés</h1> 
 
