@@ -22,13 +22,13 @@ function AllArticles() {
     const [idArticleModifyOrDelete, setIdArticleModifyOrDelete] = useState('');
     const [idArticleModify, setIdArticleModify] = useState('');
 
-
     const [updateArticleInputData, setUpdateArticleInputData] = useState('');
     const [updateFile, setUpdateFile] = useState('');
 
     const [errorArticleEmpty, setErrorArticleEmpty] = useState(true);
     const [errorFileEmpty, setErrorFileEmpty] = useState(true);
 
+    
     const [deletePictureData, setDeletePictureData] = useState(false);
 
 
@@ -65,6 +65,11 @@ function AllArticles() {
         setIdArticleModify('')
     }
 
+    function clearPicturePrewiew() {
+        setUpdateFile('')
+    }
+    
+
     function handleChange(e) {
         setUpdateFile(e.target.files[0]) 
         setErrorFileEmpty(false)
@@ -72,7 +77,6 @@ function AllArticles() {
     }
 
     function updateMessageValidation () {
-
         if (updateArticleInputData === '') {
             setErrorArticleEmpty(true)   
         }
@@ -162,6 +166,19 @@ function AllArticles() {
                                             : article.imageUrl?
                                                 <img className = "image-article-modify" alt="image article"/>
                                             :null
+                                        }
+                                    </div>
+
+                                    <div>
+                                        {updateFile?
+                                            <button className="cancelPicture"  onClick={e => clearPicturePrewiew()}>
+                                                <i className="fa-solid fa-xmark"></i>
+                                            </button>
+                                            :<p className = "noPicture">Aucune image</p>
+                                          
+                                            /*<button className="deletePicture" v-else-if="article.imageUrl" v-on:click="deletePicture(article.imageUrl)">
+                                            <i className="fa-solid fa-xmark"></i>
+                                            </button>*/
                                         }
                                     </div>
   
