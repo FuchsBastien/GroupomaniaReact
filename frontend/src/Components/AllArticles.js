@@ -18,9 +18,16 @@ function AllArticles() {
     const [userLastname, setUserLastname] = useState(localStorage.getItem('Lastname'));
     const [userActivate, setUserActivate] = useState(localStorage.getItem('Activate'));
 
-    const [idArticleUpdate, setIdArticleUpdate] = useState('');
+
+    const [idArticleModifyOrDelete, setIdArticleModifyOrDelete] = useState('');
+    const [idArticleModify, setIdArticleModify] = useState('');
 
 
+    const [updateArticleInputData, setUpdateArticleInputData] = useState('');
+    const [updateFile, setUpdateFile] = useState('');
+    const [deletePictureData, setDeletePictureData] = useState(false);
+
+     
 
     React.useEffect(() => {
         loadArticles () 
@@ -47,6 +54,21 @@ function AllArticles() {
     }
 
 
+    function clearDisplayButtonAndCardModifyDelete() {
+        setIdArticleModifyOrDelete ('')
+        setIdArticleModify('')
+    }
+
+    function handleChange(e) {
+        setUpdateFile(e.target.files[0]) 
+    }
+
+    let picturePreview;
+    if (updateFile) {
+        picturePreview = <img className = "picture" src={URL.createObjectURL(updateFile)}/>
+    }
+
+
     return (
         <div className ="all_articles">
 
@@ -61,15 +83,15 @@ function AllArticles() {
                             <div className ="article_avatar1">
                                 <img className="iconUser rounded-circle mb-2 me-2" width="100" src={article.User.imageUrl}/>       
                                 <p className= "name">{article.User.firstname} {article.User.lastname}</p>
-                                <p class= "date">le {article.createdAt [8]}{article.createdAt [9]}-{article.createdAt [5]}{article.createdAt [6]}-{article.createdAt [0]}{article.createdAt [1]}{article.createdAt [2]}{article.createdAt [3]}</p>
+                                <p className= "date">le {article.createdAt [8]}{article.createdAt [9]}-{article.createdAt [5]}{article.createdAt [6]}-{article.createdAt [0]}{article.createdAt [1]}{article.createdAt [2]}{article.createdAt [3]}</p>
                             </div>
                             <div className ="article_avatar2">
                                 {userAdmin == 'true'? 
-                                    <button className="modifyOrDelete" onClick={e => setIdArticleUpdate(article.id)} title="Modifier ou supprimer votre article" >
+                                    <button className="modifyOrDelete" onClick={e => setIdArticleModifyOrDelete(article.id)} title="Modifier ou supprimer votre article" >
                                         <i className="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     : article.userId == userId? 
-                                        <button className="modifyOrDelete" onClick={e => setIdArticleUpdate(article.id)} title="Modifier ou supprimer votre article" >
+                                        <button className="modifyOrDelete" onClick={e => setIdArticleModifyOrDelete(article.id)} title="Modifier ou supprimer votre article" >
                                         <i className="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
                                     : null
@@ -79,25 +101,43 @@ function AllArticles() {
 
                        
                         {/*bouton modifier (user de l'article)*/}
-                        {idArticleUpdate == article.id && article.userId == userId? 
+                        {idArticleModifyOrDelete == article.id && article.userId == userId? 
                             <div>
-                                <button className="btn-success rounded">Modifier</button>
+                                <button className="btn-success rounded" onClick={e => setIdArticleModify(article.id)}>Modifier</button>
                                 <br/><br/>
                                 <br/>
                             </div>
                         : null
                         }
 
-
                         {/*carte modification article*/}
-                        {idArticleUpdate == article.id?
+                        {idArticleModify == article.id?
                             <div className="container-modify"> 
                                 <div className="div-modify">
                                     <div className="titre">
                                         <p>Modifier votre publication</p>
-                                        <button class="cancelModify" onClick={e => setIdArticleUpdate(null)} >
-                                            <i class="fa-solid fa-xmark"></i>
+                                        <button className="cancelModify" onClick={e => clearDisplayButtonAndCardModifyDelete()} >
+                                            <i className="fa-solid fa-xmark"></i>
                                         </button>
+                                    </div>
+
+                                    <textarea className= "form-control mb-2" onInput={e => setUpdateArticleInputData(e.target.value)} id="content"  rows="1" placeholder= "Modifier votre contenu..."></textarea>
+
+                                   <div>
+                                        {picturePreview?
+                                            <img className = "picture" src={URL.createObjectURL(updateFile)}/>
+                                            :deletePictureData == true?
+                                                <p className = "noPicture"></p>
+                                            : article.imageUrl?
+                                        <img className = "image-article-modify" alt="image article"/>
+                                        :null
+                                        }
+                                    </div>
+  
+                                    <div>
+                                        <input className="form-control-file" onChange={e => handleChange(e)} aria-label="envoi image" accept="image/*" type="file" id="image"/>
+                                        <br/>
+                                        <button className="btn-success rounded" >Enregistrer</button> 
                                     </div>
                                 </div>
                             </div>
@@ -106,14 +146,14 @@ function AllArticles() {
 
 
                         {/*bouton supprimer (admin)*/}
-                        {idArticleUpdate == article.id && userAdmin == 'true'? 
+                        {idArticleModifyOrDelete == article.id && userAdmin == 'true'? 
                             <div>
                                 <button className="btn-danger ms-2 rounded" onClick= {e => deleteArticle(article.id)}>Supprimer</button>
                                 <br/><br/>
                                 <br/>
                             </div>
                           //bouton supprimer (user de l'article)
-                            : idArticleUpdate == article.id && article.userId == userId?
+                            : idArticleModifyOrDelete == article.id && article.userId == userId?
                                 <div>
                                     <button className="btn-danger ms-2 rounded" onClick= {e => deleteArticle(article.id)}>Supprimer</button>
                                     <br/><br/>
@@ -122,9 +162,12 @@ function AllArticles() {
                             : null
                         }
 
-                        
+
+                        {/*contenu article*/}
                         <p className="article_content">{article.content}</p>
-                     
+
+
+                        {/*image article*/}
                         {article.imageUrl?
                         <img className="image_article" src={article.imageUrl} alt="image article"/>
                         : null
