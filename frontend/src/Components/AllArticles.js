@@ -61,6 +61,7 @@ function AllArticles() {
                             <div className ="article_avatar1">
                                 <img className="iconUser rounded-circle mb-2 me-2" width="100" src={article.User.imageUrl}/>       
                                 <p className= "name">{article.User.firstname} {article.User.lastname}</p>
+                                <p class= "date">le {article.createdAt [8]}{article.createdAt [9]}-{article.createdAt [5]}{article.createdAt [6]}-{article.createdAt [0]}{article.createdAt [1]}{article.createdAt [2]}{article.createdAt [3]}</p>
                             </div>
                             <div className ="article_avatar2">
                                 {userAdmin == 'true'? 
