@@ -88,6 +88,23 @@ function AllArticles() {
                         : null
                         }
 
+
+                        {/*carte modification article*/}
+                        {idArticleUpdate == article.id?
+                            <div className="container-modify"> 
+                                <div className="div-modify">
+                                    <div className="titre">
+                                        <p>Modifier votre publication</p>
+                                        <button class="cancelModify" onClick={e => setIdArticleUpdate(null)} >
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            :null
+                        }
+
+
                         {/*bouton supprimer (admin)*/}
                         {idArticleUpdate == article.id && userAdmin == 'true'? 
                             <div>
