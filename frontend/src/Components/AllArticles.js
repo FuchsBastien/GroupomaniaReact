@@ -19,9 +19,6 @@ function AllArticles() {
     const [userActivate, setUserActivate] = useState(localStorage.getItem('Activate'));
 
     const [idArticleUpdate, setIdArticleUpdate] = useState('');
-   
-
-
 
 
 
@@ -29,19 +26,26 @@ function AllArticles() {
         loadArticles () 
     }, []);
 
-        function loadArticles () {
-            axios.get ("http://localhost:3000/api/articles/", {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-                .then(articles => {
-                console.log(articles);
-                setArticlesArray(articles.data)   
-                }) 
-                //on rajoute [] pour définir un tableau sans le mettre dans useState pour éviter de générer le state à l'infini
-        }
+    function loadArticles () {
+        axios.get ("http://localhost:3000/api/articles/", {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+            .then(articles => {
+            console.log(articles);
+            setArticlesArray(articles.data)   
+            }) 
+            //on rajoute [] pour définir un tableau sans le mettre dans useState pour éviter de générer le state à l'infini
+    }
 
+    function deleteArticle (id) {
+        axios.delete("http://localhost:3000/api/articles/"+id, {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+           .then(() => {
+              console.log('article supprimé!');
+              loadArticles()
+           })
+           .catch((error) => {
+              console.log(error.message);
+        })
+    }
 
-    console.log(articlesArray);
-
-    
 
     return (
         <div className ="all_articles">
@@ -50,26 +54,20 @@ function AllArticles() {
 
             <h1>Tous les Articles Publiés</h1> 
 
-            <h1>{idArticleUpdate}</h1>
-
             <div className="articles_frame">
                 {articlesArray.map (article => (
                     <div className="article">
                         <div className ="article_avatar">
                             <div className ="article_avatar1">
-                                {userAdmin === "true"? 
-                                    <img className="iconUser rounded-circle mb-2 me-2" width="100" src={article.User.imageUrl}/>
-                                    : null
-                                }
+                                <img className="iconUser rounded-circle mb-2 me-2" width="100" src={article.User.imageUrl}/>       
                                 <p className= "name">{article.User.firstname} {article.User.lastname}</p>
-                            
                             </div>
                             <div className ="article_avatar2">
-                                {article.userId == userId? 
+                                {userAdmin == 'true'? 
                                     <button className="modifyOrDelete" onClick={e => setIdArticleUpdate(article.id)} title="Modifier ou supprimer votre article" >
                                         <i className="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
-                                    : userAdmin == 'true'? 
+                                    : article.userId == userId? 
                                         <button className="modifyOrDelete" onClick={e => setIdArticleUpdate(article.id)} title="Modifier ou supprimer votre article" >
                                         <i className="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
@@ -79,12 +77,30 @@ function AllArticles() {
                         </div>
 
                        
-                        {idArticleUpdate == article.id? 
-                            <div className ="article_avatar2">
+                        {/*bouton modifier (user de l'article)*/}
+                        {idArticleUpdate == article.id && article.userId == userId? 
+                            <div>
                                 <button className="btn-success rounded">Modifier</button>
                                 <br/><br/>
                                 <br/>
                             </div>
+                        : null
+                        }
+
+                        {/*bouton supprimer (admin)*/}
+                        {idArticleUpdate == article.id && userAdmin == 'true'? 
+                            <div>
+                                <button className="btn-danger ms-2 rounded" onClick= {e => deleteArticle(article.id)}>Supprimer</button>
+                                <br/><br/>
+                                <br/>
+                            </div>
+                          //bouton supprimer (user de l'article)
+                            : idArticleUpdate == article.id && article.userId == userId?
+                                <div>
+                                    <button className="btn-danger ms-2 rounded" onClick= {e => deleteArticle(article.id)}>Supprimer</button>
+                                    <br/><br/>
+                                    <br/>
+                                </div>
                             : null
                         }
 
