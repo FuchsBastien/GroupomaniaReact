@@ -25,13 +25,20 @@ function AllArticles() {
 
     const [updateArticleInputData, setUpdateArticleInputData] = useState('');
     const [updateFile, setUpdateFile] = useState('');
+
+    const [errorArticleEmpty, setErrorArticleEmpty] = useState(true);
+    const [errorFileEmpty, setErrorFileEmpty] = useState(true);
+
     const [deletePictureData, setDeletePictureData] = useState(false);
 
-     
+
+
+   
 
     React.useEffect(() => {
         loadArticles () 
     }, []);
+
 
     function loadArticles () {
         axios.get ("http://localhost:3000/api/articles/", {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
@@ -53,7 +60,6 @@ function AllArticles() {
         })
     }
 
-
     function clearDisplayButtonAndCardModifyDelete() {
         setIdArticleModifyOrDelete ('')
         setIdArticleModify('')
@@ -61,12 +67,37 @@ function AllArticles() {
 
     function handleChange(e) {
         setUpdateFile(e.target.files[0]) 
+        setErrorFileEmpty(false)
+        //updateMessageValidation ()
     }
 
-    let picturePreview;
-    if (updateFile) {
-        picturePreview = <img className = "picture" src={URL.createObjectURL(updateFile)}/>
+    function updateMessageValidation () {
+
+        if (updateArticleInputData === '') {
+            setErrorArticleEmpty(true)   
+        }
+        else {
+            setErrorArticleEmpty(false)
+        }
+    
+        if (updateFile === '') {
+            setErrorFileEmpty(true)   
+        }
+        else {
+            setErrorFileEmpty(false)
+        }
     }
+
+    let buttonModificationNoValid;
+    if (errorArticleEmpty === true && errorFileEmpty === true) {
+        buttonModificationNoValid = true;
+        console.log('bouton publication non valide');
+    }
+    else {
+        buttonModificationNoValid = false;
+        console.log('bouton publication valide');
+    }
+ 
 
 
     return (
@@ -121,23 +152,23 @@ function AllArticles() {
                                         </button>
                                     </div>
 
-                                    <textarea className= "form-control mb-2" onInput={e => setUpdateArticleInputData(e.target.value)} id="content"  rows="1" placeholder= "Modifier votre contenu..."></textarea>
+                                    <textarea className= "form-control mb-2" onInput={e => setUpdateArticleInputData(e.target.value)} onKeyUp ={updateMessageValidation} id="content"  rows="1" placeholder= "Modifier votre contenu..."></textarea>
 
                                    <div>
-                                        {picturePreview?
+                                        {updateFile?
                                             <img className = "picture" src={URL.createObjectURL(updateFile)}/>
                                             :deletePictureData == true?
                                                 <p className = "noPicture"></p>
                                             : article.imageUrl?
-                                        <img className = "image-article-modify" alt="image article"/>
-                                        :null
+                                                <img className = "image-article-modify" alt="image article"/>
+                                            :null
                                         }
                                     </div>
   
                                     <div>
                                         <input className="form-control-file" onChange={e => handleChange(e)} aria-label="envoi image" accept="image/*" type="file" id="image"/>
                                         <br/>
-                                        <button className="btn-success rounded" >Enregistrer</button> 
+                                        <button disabled = {buttonModificationNoValid} className="btn-success rounded" >Enregistrer</button> 
                                     </div>
                                 </div>
                             </div>
