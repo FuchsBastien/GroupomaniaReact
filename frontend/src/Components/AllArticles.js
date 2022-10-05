@@ -1,4 +1,6 @@
-import './AllArticles.css';
+import style from './AllArticles.module.css';
+//multiple classname sur une balise
+import cx from 'classnames';
 import React from "react";
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
@@ -140,7 +142,7 @@ function AllArticles() {
 
 
     return (
-        <div className ="all_articles">
+        <div className = {style.all_articles}>
 
             <h1>Bienvenue {userFirstname}!</h1> 
 
@@ -148,22 +150,22 @@ function AllArticles() {
 
             <h1>Tous les Articles Publiés</h1> 
 
-            <div className="articles_frame">
+            <div className={style.articles_frame}>
                 {articlesArray.map (article => (
-                    <div className="article">
-                        <div className ="article_avatar">
-                            <div className ="article_avatar1">
+                    <div className={style.article}>
+                        <div className ={style.article_avatar}>
+                            <div className = {style.article_avatar1}>
                                 <img className="iconUser rounded-circle mb-2 me-2" width="100" src={article.User.imageUrl}/>       
-                                <p className= "name">{article.User.firstname} {article.User.lastname}</p>
-                                <p className= "date">le {article.createdAt [8]}{article.createdAt [9]}-{article.createdAt [5]}{article.createdAt [6]}-{article.createdAt [0]}{article.createdAt [1]}{article.createdAt [2]}{article.createdAt [3]}</p>
+                                <p className= {style.name}>{article.User.firstname} {article.User.lastname}</p>
+                                <p className= {style.date}>le {article.createdAt [8]}{article.createdAt [9]}-{article.createdAt [5]}{article.createdAt [6]}-{article.createdAt [0]}{article.createdAt [1]}{article.createdAt [2]}{article.createdAt [3]}</p>
                             </div>
-                            <div className ="article_avatar2">
+                            <div className ={style.article_avatar2}>
                                 {userAdmin == 'true'? 
-                                    <button className="modifyOrDelete" onClick={e => setIdArticleModifyOrDelete(article.id)} title="Modifier ou supprimer votre article" >
+                                    <button className={style.modifyOrDelete} onClick={e => setIdArticleModifyOrDelete(article.id)} title="Modifier ou supprimer votre article" >
                                         <i className="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     : article.userId == userId? 
-                                        <button className="modifyOrDelete" onClick={e => setIdArticleModifyOrDelete(article.id)} title="Modifier ou supprimer votre article" >
+                                        <button className={style.modifyOrDelete} onClick={e => setIdArticleModifyOrDelete(article.id)} title="Modifier ou supprimer votre article" >
                                         <i className="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
                                     : null
@@ -184,24 +186,24 @@ function AllArticles() {
 
                         {/*carte modification article*/}
                         {idArticleModify == article.id?
-                            <div className="container-modify"> 
-                                <div className="div-modify">
-                                    <div className="titre">
+                            <div className= {style.container_modify}> 
+                                <div className={style.div_modify}>
+                                    <div className= {style.titre}>
                                         <p>Modifier votre publication</p>
-                                        <button className="cancelModify" onClick={e => clearDisplayButtonAndCardModifyDelete()} >
+                                        <button className= {style.cancelModify} onClick={e => clearDisplayButtonAndCardModifyDelete()} >
                                             <i className="fa-solid fa-xmark"></i>
                                         </button>
                                     </div>
 
-                                    <textarea className= "form-control mb-2" onInput={e => setUpdateArticleInputData(e.target.value)} onKeyUp ={updateMessageValidation}  id="content"  rows="1" placeholder= "Modifier votre contenu...">{updateArticleInputData}</textarea>
+                                    <textarea className= {cx ("form-control mt-2", style.form_control)} onInput={e => setUpdateArticleInputData(e.target.value)} onKeyUp ={updateMessageValidation}  id="content"  rows="1" placeholder= "Modifier votre contenu...">{updateArticleInputData}</textarea>
 
                                    <div>
                                         {updateFile?
-                                            <img className = "picture" src={URL.createObjectURL(updateFile)}/>
+                                            <img className = {style.picture} src={URL.createObjectURL(updateFile)}/>
                                             :deletePictureArticleData == true?
-                                                <p className = "noPicture">Aucune Image</p>
+                                                <p className = {style.noPicture}>Aucune Image</p>
                                             :article.imageUrl?                         
-                                                <img className="image-article-modify" src={article.imageUrl} alt="image article"/>
+                                                <img className={style.image_article_modify} src={article.imageUrl} alt="image article"/>
                                             :null  
             
                                         }
@@ -209,13 +211,13 @@ function AllArticles() {
 
                                     <div>
                                         {updateFile?
-                                            <button className="cancelPicture" onClick={e => clearPicturePrewiew()}>
+                                            <button className={style.cancelPicture} onClick={e => clearPicturePrewiew()}>
                                                 <i className="fa-solid fa-xmark"></i>
                                             </button>
                                             :deletePictureArticleData == true?
                                             null
                                             :article.imageUrl?
-                                            <button className="deletePicture" onClick={e => setDeletePictureArticleData(true)} >
+                                            <button className={style.deletePicture} onClick={e => setDeletePictureArticleData(true)} >
                                                 <i className="fa-solid fa-xmark"></i>
                                             </button>
                                             :null
@@ -252,12 +254,12 @@ function AllArticles() {
 
 
                         {/*contenu article*/}
-                        <p className="article_content">{article.content}</p>
+                        <p className= {style.article_content}>{article.content}</p>
 
 
                         {/*image article*/}
                         {article.imageUrl?
-                        <img className="image_article" src={article.imageUrl} alt="image article"/>
+                        <img className={style.image_article} src={article.imageUrl} alt="image article"/>
                         : null
                         }
                         
