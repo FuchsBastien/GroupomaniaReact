@@ -32,7 +32,7 @@ function AllArticles() {
     const [deletePictureData, setDeletePictureData] = useState(false);
 
 
-
+console.log(updateFile);
    
 
     React.useEffect(() => {
@@ -65,15 +65,20 @@ function AllArticles() {
         setIdArticleModify('')
     }
 
-    function clearPicturePrewiew() {
-        setUpdateFile('')
-    }
-    
-
     function handleChange(e) {
         setUpdateFile(e.target.files[0]) 
         setErrorFileEmpty(false)
         //updateMessageValidation ()
+    }
+
+    function clearPicturePrewiew() {
+        setUpdateFile('')
+        setErrorFileEmpty(true)
+    }
+
+
+    function deletePicture(imageUrl) {
+         setUpdateFile('')
     }
 
     function updateMessageValidation () {
@@ -106,6 +111,8 @@ function AllArticles() {
 
     return (
         <div className ="all_articles">
+
+            <h1>Bienvenue {userFirstname}!</h1> 
 
             <CreateArticle func = {loadArticles}/>
 
@@ -162,23 +169,26 @@ function AllArticles() {
                                         {updateFile?
                                             <img className = "picture" src={URL.createObjectURL(updateFile)}/>
                                             :deletePictureData == true?
-                                                <p className = "noPicture"></p>
-                                            : article.imageUrl?
-                                                <img className = "image-article-modify" alt="image article"/>
-                                            :null
+                                                <p className = "noPicture">Aucune Image</p>
+                                            :article.imageUrl?                         
+                                                <img className="image-article-modify" src={article.imageUrl} alt="image article"/>
+                                            :null  
+            
                                         }
                                     </div>
 
                                     <div>
                                         {updateFile?
-                                            <button className="cancelPicture"  onClick={e => clearPicturePrewiew()}>
+                                            <button className="cancelPicture" onClick={e => clearPicturePrewiew()}>
                                                 <i className="fa-solid fa-xmark"></i>
                                             </button>
-                                            :<p className = "noPicture">Aucune image</p>
-                                          
-                                            /*<button className="deletePicture" v-else-if="article.imageUrl" v-on:click="deletePicture(article.imageUrl)">
-                                            <i className="fa-solid fa-xmark"></i>
-                                            </button>*/
+                                            :deletePictureData?
+                                             null
+                                            :article.imageUrl?
+                                            <button className="deletePicture" onClick={e => setDeletePictureData(true)} >
+                                                <i className="fa-solid fa-xmark"></i>
+                                            </button>
+                                            :null
                                         }
                                     </div>
   
