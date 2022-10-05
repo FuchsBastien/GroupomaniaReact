@@ -59,6 +59,27 @@ function AllArticles() {
     }
 
 
+    function modifyArticle(id) {
+           const formData = new FormData()
+           formData.append('content', updateArticleInputData);
+           formData.append('imageUrl', updateFile); 
+
+           axios.put("http://localhost:3000/api/articles/"+id, formData, {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+              .then(() => {
+                 console.log('article modifié');
+                 clearDisplayButtonAndCardModifyDelete()
+                 setUpdateFile('')
+                 loadArticles() 
+
+              })
+              .catch((error) => {
+                 console.log(error.message);
+              })    
+           
+    }
+
+
+
     //enregistre le contenu de l'article à afficher dans la fenêtre de modification au clic de "modifier"
     function contentArticleTextarea(article_content) {
         setUpdateArticleInputData(article_content)
@@ -67,7 +88,7 @@ function AllArticles() {
     //enlève l'affichage des boutons modifier et supprimer au clic de la croix dans la fenêtre de modification
     function clearDisplayButtonAndCardModifyDelete() {
         setDeletePictureArticleData (false)
-        setIdArticleModifyOrDelete ('')
+        setIdArticleModifyOrDelete('')
         setIdArticleModify('')
     }
 
@@ -204,7 +225,7 @@ function AllArticles() {
                                     <div>
                                         <input className="form-control-file" onChange={e => handleChange(e)} aria-label="envoi image" accept="image/*" type="file" id="image"/>
                                         <br/>
-                                        <button disabled = {buttonModificationNoValid} className="btn-success rounded" >Enregistrer</button> 
+                                        <button disabled = {buttonModificationNoValid} className="btn-success rounded"   onClick= {e => modifyArticle(article.id)} >Enregistrer</button> 
                                     </div>
                                 </div>
                             </div>
