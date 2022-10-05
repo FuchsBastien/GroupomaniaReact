@@ -58,7 +58,7 @@ function CreateArticle(props) {
     
     let picturePreview;
     if (file) {
-        picturePreview = <img className = "picture" src={URL.createObjectURL(file)}/>
+        picturePreview = <img className = {style.picture} src={URL.createObjectURL(file)}/>
     }
 
 

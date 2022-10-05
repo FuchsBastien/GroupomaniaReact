@@ -222,7 +222,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255,255,255,0.6);
+    background-color: rgba(255,255,255,0.8);
     
     z-index: 1;
           
@@ -230,13 +230,14 @@
 
  .div_modify {
     width: 50%;
-    margin-top: 300px;
+    margin-top: 400px;
     margin-left: auto;
     margin-right: auto;
     padding: 30px;
     height: auto;
     background-color: white;
     box-shadow: rgb(122, 44, 44);
+    border: solid gray 1px;
     border-radius: 20px;
  }
 

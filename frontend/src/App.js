@@ -11,7 +11,6 @@ import SignupSuccess from './Components/SignupSuccess.js';
 import Login from './Components/Login.js';
 import AllArticles from './Components/AllArticles.js';
 
-
 function App() {
   return (
     <div className="App">

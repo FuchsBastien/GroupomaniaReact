@@ -8,10 +8,13 @@ import axios from 'axios';
 
 
 import CreateArticle from './CreateArticle.js';
+import CreateComment from './CreateComment.js';
 
 function AllArticles() {
 
     const [articlesArray, setArticlesArray] = useState([]);
+
+
 
     const [userToken, setUserToken] = useState(localStorage.getItem('token'));
     const [userAdmin, setUserAdmin] = useState(localStorage.getItem('Admin'));
@@ -34,20 +37,47 @@ function AllArticles() {
 
 
    
-
+   
+    /* lance les fonctions au chargement du composant
+    on rajoute [] pour définir un tableau sans le mettre dans useState pour éviter de générer le state à l'infini*/
     React.useEffect(() => {
         loadArticles () 
-    }, []);
+    }, [], 
+        idForEachArticle (articlesArray));
+   
 
 
+    //charge les articles
     function loadArticles () {
         axios.get ("http://localhost:3000/api/articles/", {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
             .then(articles => {
             console.log(articles);
-            setArticlesArray(articles.data)   
-            }) 
-            //on rajoute [] pour définir un tableau sans le mettre dans useState pour éviter de générer le state à l'infini
+            setArticlesArray(articles.data)
+            })       
     }
+
+
+    //pour chaque article on applique les fonction loadComments et loadLikes avec en paramètre l"id de l'article
+    function idForEachArticle (articlesArray) {
+        console.log(articlesArray); 
+        articlesArray.forEach ((article) => {
+            console.log(article);
+            loadComments (article.id, article);
+           // this.loadLikes (article.id, article);
+        })
+    }
+    
+
+    //charge le nombre de commentaires par article
+    function loadComments (article_id, article) { 
+        axios.get (`http://localhost:3000/api/articles/${article_id}/comments`, {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+            .then(response => {
+              console.log(response.data);
+              article.nbComment = response.data.length
+              console.log(article.nbComment);
+            })
+    }
+
 
     function deleteArticle (id) {
         axios.delete("http://localhost:3000/api/articles/"+id, {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
@@ -59,6 +89,8 @@ function AllArticles() {
               console.log(error.message);
         })
     }
+
+    console.log(articlesArray);
 
 
     function modifyArticle(id) {
@@ -155,9 +187,13 @@ function AllArticles() {
                     <div className={style.article}>
                         <div className ={style.article_avatar}>
                             <div className = {style.article_avatar1}>
-                                <img className="iconUser rounded-circle mb-2 me-2" width="100" src={article.User.imageUrl}/>       
-                                <p className= {style.name}>{article.User.firstname} {article.User.lastname}</p>
-                                <p className= {style.date}>le {article.createdAt [8]}{article.createdAt [9]}-{article.createdAt [5]}{article.createdAt [6]}-{article.createdAt [0]}{article.createdAt [1]}{article.createdAt [2]}{article.createdAt [3]}</p>
+                                <div>
+                                    <img className="iconUser rounded-circle mb-2 me-2" width="100" src={article.User.imageUrl}/>       
+                                </div>
+                                <div>
+                                    <p className= {style.name}>{article.User.firstname} {article.User.lastname}</p>                               
+                                    <p className= {style.date}>le {article.createdAt [8]}{article.createdAt [9]}-{article.createdAt [5]}{article.createdAt [6]}-{article.createdAt [0]}{article.createdAt [1]}{article.createdAt [2]}{article.createdAt [3]}</p>
+                                </div>
                             </div>
                             <div className ={style.article_avatar2}>
                                 {userAdmin == 'true'? 
@@ -262,6 +298,8 @@ function AllArticles() {
                         <img className={style.image_article} src={article.imageUrl} alt="image article"/>
                         : null
                         }
+
+                        <CreateComment/>
                         
                     </div>         
                 ))} 
