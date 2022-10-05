@@ -28,11 +28,9 @@ function AllArticles() {
     const [errorArticleEmpty, setErrorArticleEmpty] = useState(true);
     const [errorFileEmpty, setErrorFileEmpty] = useState(true);
 
-    
-    const [deletePictureData, setDeletePictureData] = useState(false);
+    const [deletePictureArticleData, setDeletePictureArticleData] = useState(false);
 
 
-console.log(updateFile);
    
 
     React.useEffect(() => {
@@ -60,27 +58,37 @@ console.log(updateFile);
         })
     }
 
+
+    //enregistre le contenu de l'article à afficher dans la fenêtre de modification au clic de "modifier"
+    function contentArticleTextarea(article_content) {
+        setUpdateArticleInputData(article_content)
+    }
+
+    //enlève l'affichage des boutons modifier et supprimer au clic de la croix dans la fenêtre de modification
     function clearDisplayButtonAndCardModifyDelete() {
+        setDeletePictureArticleData (false)
         setIdArticleModifyOrDelete ('')
         setIdArticleModify('')
     }
 
+    //affiche la miniature de l'image telechargée dans la fenêtre de modification
     function handleChange(e) {
         setUpdateFile(e.target.files[0]) 
         setErrorFileEmpty(false)
         //updateMessageValidation ()
     }
 
+    //supprime la miniature et l'image téléchargée dans la fenêtre de modification
     function clearPicturePrewiew() {
         setUpdateFile('')
         setErrorFileEmpty(true)
     }
 
-
     function deletePicture(imageUrl) {
          setUpdateFile('')
     }
 
+    //vérifie qu'au moins une modification a été effectuée
     function updateMessageValidation () {
         if (updateArticleInputData === '') {
             setErrorArticleEmpty(true)   
@@ -97,6 +105,7 @@ console.log(updateFile);
         }
     }
 
+    //Grise ou non le bouton "modifier" de l'article
     let buttonModificationNoValid;
     if (errorArticleEmpty === true && errorFileEmpty === true) {
         buttonModificationNoValid = true;
@@ -145,7 +154,7 @@ console.log(updateFile);
                         {/*bouton modifier (user de l'article)*/}
                         {idArticleModifyOrDelete == article.id && article.userId == userId? 
                             <div>
-                                <button className="btn-success rounded" onClick={e => setIdArticleModify(article.id)}>Modifier</button>
+                                <button className="btn-success rounded" onClick={e => {setIdArticleModify(article.id); contentArticleTextarea(article.content)}}>Modifier</button>
                                 <br/><br/>
                                 <br/>
                             </div>
@@ -163,12 +172,12 @@ console.log(updateFile);
                                         </button>
                                     </div>
 
-                                    <textarea className= "form-control mb-2" onInput={e => setUpdateArticleInputData(e.target.value)} onKeyUp ={updateMessageValidation} id="content"  rows="1" placeholder= "Modifier votre contenu..."></textarea>
+                                    <textarea className= "form-control mb-2" onInput={e => setUpdateArticleInputData(e.target.value)} onKeyUp ={updateMessageValidation}  id="content"  rows="1" placeholder= "Modifier votre contenu...">{updateArticleInputData}</textarea>
 
                                    <div>
                                         {updateFile?
                                             <img className = "picture" src={URL.createObjectURL(updateFile)}/>
-                                            :deletePictureData == true?
+                                            :deletePictureArticleData == true?
                                                 <p className = "noPicture">Aucune Image</p>
                                             :article.imageUrl?                         
                                                 <img className="image-article-modify" src={article.imageUrl} alt="image article"/>
@@ -182,10 +191,10 @@ console.log(updateFile);
                                             <button className="cancelPicture" onClick={e => clearPicturePrewiew()}>
                                                 <i className="fa-solid fa-xmark"></i>
                                             </button>
-                                            :deletePictureData?
-                                             null
+                                            :deletePictureArticleData == true?
+                                            null
                                             :article.imageUrl?
-                                            <button className="deletePicture" onClick={e => setDeletePictureData(true)} >
+                                            <button className="deletePicture" onClick={e => setDeletePictureArticleData(true)} >
                                                 <i className="fa-solid fa-xmark"></i>
                                             </button>
                                             :null
