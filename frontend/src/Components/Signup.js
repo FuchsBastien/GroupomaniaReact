@@ -119,6 +119,14 @@ function Signup(props) {
         picturePreview = <img className = {style.picture} src={URL.createObjectURL(file)}/>
     
     }
+    /*ou
+    function ab (){
+        if (file) {
+        return <img className = {style.picture} src={URL.createObjectURL(file)}/>
+        }
+    }
+    ab()*/
+
 
     /*function fileValidation () {
         console.log(file);
@@ -231,6 +239,7 @@ function Signup(props) {
 
                     <div className="preview_picture">
                     {picturePreview}
+                    {/*ou {ab()}*/}
                     </div>
                 </div>
 
@@ -239,8 +248,7 @@ function Signup(props) {
                 <button disabled={buttonInscriptionNoValid} className="submit btn btn-info btn-lg btn-block mt-3" onClick={sendForm} type="submit">S'inscrire</button>
             </form>
 
-            <p className="text-right mt-3">Déjà inscrit ? <a className={style.a}><Link to="/">Se connecter</Link></a></p>
-           
+            <p className="text-right mt-3">Déjà inscrit ? <a className={style.a}><Link to="/">Se connecter</Link></a></p>          
         </div>
     );
 }

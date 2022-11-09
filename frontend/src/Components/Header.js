@@ -5,8 +5,8 @@ import {useNavigate} from 'react-router-dom';
 
 function Header() {
 
-    const [userToken, setUserToken] = useState(localStorage.getItem('token'));
-    const [userAdmin, setUserAdmin] = useState(localStorage.getItem('Admin'));
+    let userToken = localStorage.getItem('token');
+    let userAdmin = localStorage.getItem('Admin');
    
     const navigate = useNavigate();
 
@@ -14,10 +14,15 @@ function Header() {
     console.log(userAdmin);
 
 
-    let userAdminConnect;
+    let userConnect;
     if (userAdmin === "true") {
-        userAdminConnect =
+        userConnect =
         <a>Mon Compte Admin</a>
+        console.log('ok');
+    }
+    else {
+        userConnect =
+        <a>Mon Compte</a>
         console.log('ok');
     }
 
@@ -27,7 +32,7 @@ function Header() {
         <>
         <img className="img_header_online" src='http://localhost:3000/images/logo-online.ico' alt="logo-online"/>
         <a>Tous les Articles</a>
-        {userAdminConnect}
+        {userConnect}
         <a className="deconnexion" onClick={LocalstorageClear}>Deconnexion</a>
         </>
     }
@@ -37,8 +42,8 @@ function Header() {
 
     function LocalstorageClear () {
         localStorage.clear();
-        setUserToken(null)
-        setUserAdmin(null)
+        userToken = null
+        userAdmin =null
         navigate("/")
     }
 

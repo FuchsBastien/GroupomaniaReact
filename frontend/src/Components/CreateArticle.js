@@ -16,8 +16,9 @@ function CreateArticle(props) {
     const [errorFileEmpty, setErrorFileEmpty] = useState(true);
 
 
-    console.log(articleInputData);
-    console.log(file);
+    //console.log(articleInputData);
+    //console.log(file);
+
 
     /*-------------------------------------------------------------------------------------------------*/
     function messageValidation () {
@@ -37,6 +38,8 @@ function CreateArticle(props) {
         }
     }
 
+
+    /*-------------------------------------------------------------------------------------------------*/
     function clearData() {
         setArticleInputData ('');
         setFile ('') ;
@@ -47,6 +50,7 @@ function CreateArticle(props) {
 
     function callPropsFunc() {
         console.log("ok");
+         //on appelle props qui est en paramètre de la fonction CreateArticle
         props.func()
     }
 
@@ -61,7 +65,6 @@ function CreateArticle(props) {
         picturePreview = <img className = {style.picture} src={URL.createObjectURL(file)}/>
     }
 
-
     /*-------------------------------------------------------------------------------------------------*/
     let buttonPublicationNoValid;
     if (errorArticleEmpty === true && errorFileEmpty === true) {
@@ -74,7 +77,7 @@ function CreateArticle(props) {
     }
  
     /*-------------------------------------------------------------------------------------------------*/
-    const postArticle = function(e, props) {
+    const postArticle = function(e) {
         e.preventDefault();
         
             if (file === ''){
@@ -132,36 +135,32 @@ function CreateArticle(props) {
             } 
         }
     
-
         const handleSubmit = (event)=>{
             console.log('uuuu');
-            event.preventDefault();
-            event.target.reset();
-          };
+            //event.preventDefault();
+            //event.target.reset();
+        };
         
 
     return (
         <div className= {style.container}>
-        <form id="formArticle"> 
-            <div className="form-group mt-3">
-                <label className={style.label} htmlFor="content">Créer une publication</label>
-                <textarea className={cx ("form-control mt-4", style.textarea)} onSubmit={handleSubmit} onInput={e => setArticleInputData(e.target.value)} onKeyUp ={messageValidation} id="content" rows="3" placeholder="Quoi de neuf?" required></textarea>
-            </div>
+            <form id="formArticle"> 
+                <div className="form-group mt-3">
+                    <label className={style.label} htmlFor="content">Créer une publication</label>
+                    <textarea className={cx ("form-control mt-4", style.textarea)} onSubmit={handleSubmit} onInput={e => setArticleInputData(e.target.value)} onKeyUp ={messageValidation} id="content" rows="3" placeholder="Quoi de neuf?" required></textarea>
+                </div>
 
-            <div className="form-group mt-3">
-                <input className="form-control-file" onChange={e => handleChange(e)} aria-label="envoi image" accept="image/*" type="file" id="image"/>
-            </div>
+                <div className="form-group mt-3">
+                    <input className="form-control-file" onChange={e => handleChange(e)} aria-label="envoi image" accept="image/*" type="file" id="image"/>
+                </div>
 
-            <div className="preview_picture">
-                {picturePreview}
-            </div>
-            
-            <button disabled={buttonPublicationNoValid} className ="btn btn-primary mt-4 mb-4" onClick={postArticle}>Partager</button>
-        </form>
-
-
-   
-   </div>  
+                <div className="preview_picture">
+                    {picturePreview}
+                </div>
+                
+                <button disabled={buttonPublicationNoValid} className ="btn btn-primary mt-4 mb-4" onClick={postArticle}>Partager</button>
+            </form>
+        </div>  
     );
 }
  
