@@ -12,7 +12,6 @@ import CreateComment from './CreateComment.js';
 function AllArticles() {
 
     const [articlesArray, setArticlesArray] = useState([]);
-
     const [articlesArrayNew, setArticlesArrayNew] = useState([]);
     
     const [userToken, setUserToken] = useState(localStorage.getItem('token'));
@@ -46,11 +45,6 @@ function AllArticles() {
         buttonModificationNoValid = false;
         console.log('bouton publication valide');
     }
- 
-    console.log(articlesArray);
-    //let ab = []
-    //console.log(ab)
-    //console.log(nbCommentData);
 
 
     /*lance les fonctions au 1er chargement du composant
@@ -59,10 +53,9 @@ function AllArticles() {
         loadArticles ();
     }, []);
 
-  /*React.useEffect(() => {
-    idForEachArticle ();
-    }, []);*/
    
+    console.log(articlesArray);
+    console.log(articlesArrayNew);
 
     //charge les articles
     const loadArticles = function () {
@@ -77,22 +70,23 @@ function AllArticles() {
     //pour chaque article on applique les fonction loadComments et loadLikes avec en paramètre l"id de l'article
     //on peut faire appel à la fonction avec ou sans paramètre (articlesArray.forEach = usestate) 
     function idForEachArticle (articlesArray) {
-        console.log(articlesArray); 
+        //console.log(articlesArray); 
         articlesArray.forEach ((article) => {
             console.log(article);
-            //article.nbComment = 10
-            //console.log(articlesArray);
             axios.get (`http://localhost:3000/api/articles/${article.id}/comments`, {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
             .then(response => {
               console.log(response.data.length);
-              article.nbComment = response.data.length
-              console.log(article);
-              //setArticlesArrayNew (response.data.length)
-              //ab.push(response.data.length)
-              //console.log(ab);
-              //console.log(article.nbComment);  
+              //const newArr = [];
+              //console.log(newArr);
+              const newArticle = article
+              newArticle.nbComment = response.data.length
+              console.log(newArticle);
+              //newArr.push(newArticle)
+              //console.log(newArr);
+              setArticlesArrayNew(newArticle)
+              //console.log(articlesArrayNew);
+              //article.nbComment = response.data.length
               //setArticlesArrayNew (current => [...current, response.data.length]) 
-              console.log(articlesArray); 
             }) 
             //loadComments (article.id, article);
             //this.loadLikes (article.id, article);
@@ -100,8 +94,6 @@ function AllArticles() {
     }
     //idForEachArticle (articlesArray)
 
-
-    
     //charge le nombre de commentaires par article
     /*function loadComments (articlesArray { 
         console.log('ok');
@@ -115,8 +107,7 @@ function AllArticles() {
               //setNbCommentData(response.data.length)
               //console.log(article.nbComment);
               console.log(articlesArray);            
-            })    
-        
+            })     
     }/*/
     
    
@@ -197,9 +188,6 @@ function AllArticles() {
     }
 
 
-    const messages = ['React', 'Re: React'];
-
-
     return (
         <div className = {style.all_articles}>
 
@@ -212,7 +200,7 @@ function AllArticles() {
             <div className={style.articles_frame}>
                 {articlesArray.map ((article, index) => {
                     return (
-                        <div key={index} className= {style.article}> 
+                        <div key={article.id} className= {style.article}> 
                             <div className ={style.article_avatar}>
                                 <div className = {style.article_avatar1}>
                                     <div>
@@ -332,14 +320,11 @@ function AllArticles() {
                             <br/>
 
                             {/*Au clic on stocke l'ID de l'article choisi*/}
-                            <p>{article.nbComment}</p> 
-                        
-    
                             {article.nbComment == 0?
                                 <a className="comments"> Aucun commentaire !</a>
                             : article.nbComment == 1?
-                                <a className="comments"> {article.nbComment}commntaire</a>
-                            :<a className="comments">{article.nbComment}commetaires</a>
+                                <a className="comments"> {article.nbComment} commentaire</a>
+                            :<a className="comments">{article.nbComment} commentaires</a>
                             }
 
                             <CreateComment/>
@@ -355,15 +340,6 @@ function AllArticles() {
                 )}*/}
 
             </div>
-
-            <div>
-      <h1>Hello!</h1>
-      {messages.length > 0 &&
-        <h2>
-          You have {messages.length} unread messages.
-        </h2>
-      }
-    </div>
             
         </div>
     );
