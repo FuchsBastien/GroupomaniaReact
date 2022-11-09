@@ -197,6 +197,8 @@ function AllArticles() {
     }
 
 
+    const messages = ['React', 'Re: React'];
+
 
     return (
         <div className = {style.all_articles}>
@@ -237,13 +239,12 @@ function AllArticles() {
 
 
                             {/*bouton modifier (user de l'article)*/}
-                            {idArticleModifyOrDelete == article.id && article.userId == userId? 
+                            {idArticleModifyOrDelete == article.id && article.userId == userId &&
                                 <div>
                                     <button className="btn-success rounded" onClick={e => {setIdArticleModify(article.id); contentArticleTextarea(article.content)}}>Modifier</button>
                                     <br/><br/>
                                     <br/>
                                 </div>
-                            : null
                             }
 
                             {/*carte modification article*/}
@@ -354,6 +355,15 @@ function AllArticles() {
                 )}*/}
 
             </div>
+
+            <div>
+      <h1>Hello!</h1>
+      {messages.length > 0 &&
+        <h2>
+          You have {messages.length} unread messages.
+        </h2>
+      }
+    </div>
             
         </div>
     );
