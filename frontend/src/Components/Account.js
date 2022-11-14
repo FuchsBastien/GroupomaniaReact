@@ -12,6 +12,7 @@ function Account() {
     const [userAdmin, setUserAdmin] = useState(localStorage.getItem('Admin'));
     const [userId, setUserId] = useState(localStorage.getItem('Id'));
 
+    console.log(userAdmin);
 
     React.useEffect(() => {
         userLoad ();
@@ -63,6 +64,21 @@ function Account() {
             </div>  
         :null
         } 
+
+        {userAdmin=== "true"?
+            <div class="search_account_admin" >
+                <h1>Recherche compte</h1>
+                <input type="text" placeholder="nom"/>
+                <br/>
+                <br/>
+                <input type="text" placeholder="prénom"/>
+                <br/>
+                <br/>
+                <button>Rechercher</button>
+            </div>
+            :null
+        }
+
     </div>
   )
 }
