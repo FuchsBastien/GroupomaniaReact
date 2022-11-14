@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
-function Signup(props) {
+function Signup() {
 
     const [firstnameInputData, setFirstnameInputData] = useState('');
     const [lastnameInputData, setLastnameInputData] = useState('');

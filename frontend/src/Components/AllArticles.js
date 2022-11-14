@@ -124,7 +124,7 @@ function AllArticles() {
         })
     }
 
-
+//modifie un article
     function modifyArticle(id) {
            const formData = new FormData()
            formData.append('content', updateArticleInputData);

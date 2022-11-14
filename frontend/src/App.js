@@ -10,6 +10,7 @@ import Signup from './Components/Signup.js';
 import SignupSuccess from './Components/SignupSuccess.js';
 import Login from './Components/Login.js';
 import AllArticles from './Components/AllArticles.js';
+import Account from './Components/Account.js';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/signup" element={<Signup/>}></Route>
         <Route path="/signupSuccess" element={<SignupSuccess/>}></Route>
         <Route path="/articles" element={<AllArticles/>}></Route>
+        <Route path="/account/" element={<Account/>}></Route>
       </Routes>
       <Footer/>
       

@@ -13,31 +13,13 @@ function Header() {
     console.log(userToken);
     console.log(userAdmin);
 
-
-    let userConnect;
-    if (userAdmin === "true") {
-        userConnect =
-        <a>Mon Compte Admin</a>
-        console.log('ok');
-    }
-    else {
-        userConnect =
-        <a>Mon Compte</a>
-        console.log('ok');
+    
+    function goToAllArticles () {
+        navigate("/articles/")
     }
 
-    let userTokenConnect;
-    if (userToken) {
-        userTokenConnect = 
-        <>
-        <img className="img_header_online" src='http://localhost:3000/images/logo-online.ico' alt="logo-online"/>
-        <a>Tous les Articles</a>
-        {userConnect}
-        <a className="deconnexion" onClick={LocalstorageClear}>Deconnexion</a>
-        </>
-    }
-    else {
-        userTokenConnect = <img className = "img_header_offline" src='http://localhost:3000/images/logo-offline.png' alt="logo-offline"/>
+    function goToAccount () {
+        navigate("/account/")
     }
 
     function LocalstorageClear () {
@@ -47,6 +29,33 @@ function Header() {
         navigate("/")
     }
 
+    let userConnect;
+    if (userAdmin === "true") {
+        userConnect =
+        <a onClick={goToAccount}>Mon Compte Admin</a>
+        console.log('ok');
+    }
+    else {
+        userConnect =
+        <a onClick={goToAccount}>Mon Compte</a>
+        console.log('ok');
+    }
+
+    let userTokenConnect;
+    if (userToken) {
+        userTokenConnect = 
+        <>
+        <img className="img_header_online" src='http://localhost:3000/images/logo-online.ico' alt="logo-online"/>
+        <a onClick={goToAllArticles}>Tous les Articles</a>
+        {userConnect}
+        <a className="deconnexion" onClick={LocalstorageClear}>Deconnexion</a>
+        </>
+    }
+    else {
+        userTokenConnect = <img className = "img_header_offline" src='http://localhost:3000/images/logo-offline.png' alt="logo-offline"/>
+    }
+
+   
 
     return (
         <div id="nav" >

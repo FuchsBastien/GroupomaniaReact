@@ -86,7 +86,6 @@ function Login() {
     }
 
     
-
     /*-------------------------------------------------------------------------------------------------*/
     const sendForm = function(e) {
         e.preventDefault();
@@ -124,7 +123,7 @@ function Login() {
 
                 <div className="form-group">
                     <label className= {cx ("mb-1 mt-2", style.label)} htmlFor="Votre adresse email">Adresse mail</label>
-                    {/* on appelle soit {changeEmailInput} (ou {e => changeEmailInput (e)})...*/}
+                    {/*on appelle soit {changeEmailInput} (ou {e => changeEmailInput(e)})...*/}
                     <input className= {cx ("form-control", style.input)} value={emailInputData} onInput={changeEmailInput} type="email" id="Votre adresse email" required/>
                     {errorEmailMessage}
                 </div>
@@ -138,7 +137,7 @@ function Login() {
 
                 <p className="mt-2 text-danger">{responseError}</p>
 
-                {/* seulement {sendForm}*/}
+                {/*seulement {sendForm}*/}
                 <button className="submit btn btn-info btn-lg btn-block mt-3" onClick={sendForm} type="submit">Se connecter</button>
             </form>
 
