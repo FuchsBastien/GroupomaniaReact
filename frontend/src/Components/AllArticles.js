@@ -32,7 +32,7 @@ function AllArticles() {
 
     const [deletePictureArticleData, setDeletePictureArticleData] = useState(false);
 
-    const [nbCommentData, setNbCommentData] = useState([]);
+    const [storageIdArticle, setStorageIdArticle] = useState();
 
   
     //Grise ou non le bouton "modifier" de l'article
@@ -115,32 +115,31 @@ function AllArticles() {
     //supprime un article
     function deleteArticle (id) {
         axios.delete("http://localhost:3000/api/articles/"+id, {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-           .then(() => {
-              console.log('article supprimé!');
-              loadArticles()
-           })
-           .catch((error) => {
+            .then(() => {
+                console.log('article supprimé!');
+                loadArticles()
+            })
+            .catch((error) => {
               console.log(error.message);
-        })
+            })
     }
 
-//modifie un article
+    //modifie un article
     function modifyArticle(id) {
-           const formData = new FormData()
-           formData.append('content', updateArticleInputData);
-           formData.append('imageUrl', updateFile); 
+        const formData = new FormData()
+        formData.append('content', updateArticleInputData);
+        formData.append('imageUrl', updateFile); 
 
-           axios.put("http://localhost:3000/api/articles/"+id, formData, {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
-              .then(() => {
-                 console.log('article modifié');
-                 clearDisplayButtonAndCardModifyDelete()
-                 setUpdateFile('')
-                 loadArticles() 
-
-              })
-              .catch((error) => {
-                 console.log(error.message);
-              })            
+        axios.put("http://localhost:3000/api/articles/"+id, formData, {headers : {Authorization: 'Bearer ' + localStorage.getItem('token')}})
+            .then(() => {
+                console.log('article modifié');
+                clearDisplayButtonAndCardModifyDelete()
+                setUpdateFile('')
+                loadArticles() 
+            })
+            .catch((error) => {
+                console.log(error.message);
+            })            
     }
 
 
@@ -187,7 +186,11 @@ function AllArticles() {
         }
     }
 
+    function IdArticle (article_id) {
+        setStorageIdArticle (article_id)
 
+
+    }
     return (
         <div className = {style.all_articles}>
 
@@ -213,10 +216,12 @@ function AllArticles() {
                                 </div>
                                 <div className ={style.article_avatar2}>
                                     {userAdmin == 'true'? 
+                                        /*e => car sinon le clic s'enclenche automatiquement*/
                                         <button className={style.modifyOrDelete} onClick={e => setIdArticleModifyOrDelete(article.id)} title="Modifier ou supprimer votre article" >
                                             <i className="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
                                         : article.userId == userId? 
+                                             /*e => car sinon le clic s'enclenche automatiquement*/
                                             <button className={style.modifyOrDelete} onClick={e => setIdArticleModifyOrDelete(article.id)} title="Modifier ou supprimer votre article" >
                                             <i className="fa-solid fa-ellipsis-vertical"></i>
                                             </button>
@@ -321,13 +326,16 @@ function AllArticles() {
 
                             {/*Au clic on stocke l'ID de l'article choisi*/}
                             {article.nbComment == 0?
-                                <a className="comments"> Aucun commentaire !</a>
+                                <a onClick={e => setStorageIdArticle(article.id)} className="comments"> Aucun commentaire !</a>
                             : article.nbComment == 1?
-                                <a className="comments"> {article.nbComment} commentaire</a>
-                            :<a className="comments">{article.nbComment} commentaires</a>
+                                <a onClick={e => setStorageIdArticle(article.id)} className="comments"> {article.nbComment} commentaire</a>
+                            :<a onClick={e => setStorageIdArticle(article.id)} className="comments">{article.nbComment} commentaires</a>
                             }
 
+                             {storageIdArticle == article.id? 
                             <CreateComment/>
+                             :null
+                        }
                             
                         </div> 
                     )
